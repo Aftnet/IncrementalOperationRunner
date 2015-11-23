@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncrementalOperationRunner"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncrementalOperationRunner.Test", "IncrementalOperationRunner.Test\IncrementalOperationRunner.Test.csproj", "{8A0BEFDE-EA20-4ABD-93F8-636CB1E5F331}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B698F9F7-A859-4724-9689-071A271BF678}"
+	ProjectSection(SolutionItems) = preProject
+		License.txt = License.txt
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
