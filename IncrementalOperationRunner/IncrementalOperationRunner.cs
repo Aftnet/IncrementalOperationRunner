@@ -14,23 +14,24 @@ namespace IncrementalOperationRunner
     /// </summary>
     /// <typeparam name="TInput">Input of the background opertaion</typeparam>
     /// <typeparam name="TOutput">Output of the background operation</typeparam>
-    public class IncrementalOperationRunner<TInput, TOutput>
+    public class IncrementalOperationRunner<TInput, TOutput, TProgress>
     {
-        private readonly Func<TInput, CancellationToken, Task<TOutput>> BackgroundOperation;
+        private readonly Func<TInput, IProgress<TProgress>, CancellationToken, Task<TOutput>> BackgroundOperation;
         private TInput CurrentInput { get; set; }
+        private Progress<TProgress> ProgressManager { get; set; }
         private CancellationTokenSource CTSource { get; set; }
         private bool StopRequested { get; set; }
 
+        public event Action<TProgress> ProgressChangedEvent;
         public event Action<TOutput> OperationCompletedEvent;
 
-        public IncrementalOperationRunner(Func<TInput, CancellationToken, Task<TOutput>> backgroundOperation)
+        public IncrementalOperationRunner(Func<TInput, Task<TOutput>> backgroundOperation) : this((d, e, f) => backgroundOperation(d)) { }
+        public IncrementalOperationRunner(Func<TInput, IProgress<TProgress>, Task<TOutput>> backgroundOperation) : this((d, e, f) => backgroundOperation(d, e)) { }
+        public IncrementalOperationRunner(Func<TInput, CancellationToken, Task<TOutput>> backgroundOperation) : this((d, e, f) => backgroundOperation(d, f)) { }
+        public IncrementalOperationRunner(Func<TInput, IProgress<TProgress>, CancellationToken, Task<TOutput>> backgroundOperation)
         {
+            ProgressManager = new Progress<TProgress>(ReportProgress);
             BackgroundOperation = backgroundOperation;
-        }
-
-        public IncrementalOperationRunner(Func<TInput, Task<TOutput>> backgroundOperation)
-        {
-            BackgroundOperation = (d, e) => backgroundOperation(d);
         }
 
         public void Run(TInput input)
@@ -66,7 +67,7 @@ namespace IncrementalOperationRunner
                 {
                     try
                     {
-                        searchResult = await BackgroundOperation(CurrentInput, CTSource.Token);
+                        searchResult = await BackgroundOperation(CurrentInput, ProgressManager, CTSource.Token);
                     }
                     catch (OperationCanceledException)
                     {
@@ -78,7 +79,18 @@ namespace IncrementalOperationRunner
 
             if(!StopRequested)
             {
-                OperationCompletedEvent(searchResult);
+                if(OperationCompletedEvent != null)
+                {
+                    OperationCompletedEvent(searchResult);
+                }
+            }
+        }
+
+        private void ReportProgress(TProgress value)
+        {
+            if(ProgressChangedEvent != null)
+            {
+                ProgressChangedEvent(value);
             }
         }
     }

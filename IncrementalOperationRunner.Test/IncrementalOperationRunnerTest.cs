@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace IncrementalOperationRunner.Test
             return input;
         }
 
-        private async Task<int> BackgroundOperationWithancellation(int input, CancellationToken cancellationToken)
+        private async Task<int> BackgroundOperationWithancellation(int input, IProgress<int> progress, CancellationToken cancellationToken)
         {
             var ctr = 0;
             while (ctr < input)
@@ -30,6 +31,13 @@ namespace IncrementalOperationRunner.Test
                     BackgroundOperationNumCancellationRequests++;
                 }
                 cancellationToken.ThrowIfCancellationRequested();
+
+                var progressVal = ctr * 100 / input;
+                if (progress != null)
+                {
+                    progress.Report(progressVal);
+                }
+
                 await Task.Delay(BackgroundOperationCancellationCheckStep);
                 ctr += BackgroundOperationCancellationCheckStep;
             }
@@ -37,21 +45,29 @@ namespace IncrementalOperationRunner.Test
             return input;
         }
 
-        private IncrementalOperationRunner<int, int> GetRunner(bool cancellationTokenSupport)
+        private IncrementalOperationRunner<int, int, int> GetRunner(bool cancellationTokenSupport)
         {
             if (cancellationTokenSupport)
             {
-                return new IncrementalOperationRunner<int, int>(BackgroundOperationWithancellation);
+                return new IncrementalOperationRunner<int, int, int>(BackgroundOperationWithancellation);
             }
 
-            return new IncrementalOperationRunner<int, int>(BackgroundOperationNoCancellation);
+            return new IncrementalOperationRunner<int, int, int>(BackgroundOperationNoCancellation);
         }
 
-        private IncrementalOperationRunner<int, int>[] GetRunners()
+        private IncrementalOperationRunner<int, int, int>[] GetRunners()
         {
             var vals = new bool[] { true, false };
             var output = vals.Select(d => GetRunner(d)).ToArray();
             return output;
+        }
+
+        [TestMethod]
+        public async Task No_Events_Defined_Does_Not_Cause_Crash()
+        {
+            var runner = GetRunner(true);
+            runner.Run(10);
+            await Task.Delay(TestCompletionWaitingTime);
         }
 
         [TestMethod]
@@ -204,10 +220,44 @@ namespace IncrementalOperationRunner.Test
 
                 Assert.AreEqual(input, result);
                 var operationShouldHaveBeenCanceled = waitTimeBetweenInputs < input;
-                var expectedNumCancellations = operationShouldHaveBeenCanceled ? 1 : 0;              
+                var expectedNumCancellations = operationShouldHaveBeenCanceled ? 1 : 0;
                 Assert.AreEqual(expectedNumCancellations, BackgroundOperationNumCancellationRequests);
                 var expectedNumCallbacks = operationShouldHaveBeenCanceled ? 1 : 2;
                 Assert.AreEqual(expectedNumCallbacks, numTimesEventHandlerCalled);
+            }
+        }
+
+        [TestMethod]
+        public async Task Progress_Reporting_Works()
+        {
+            var runner = GetRunner(true);
+            var numTimesEventHandlerCalled = 0;
+            runner.ProgressChangedEvent += d =>
+            {
+                numTimesEventHandlerCalled++;
+            };
+
+            var waitTimeBetweenInputs = 30;
+            var inputRuns = new int[][]
+            {
+                new int[] { 5 * waitTimeBetweenInputs },
+                new int[] { 5 * waitTimeBetweenInputs, 3 * waitTimeBetweenInputs }
+            };
+
+            foreach (var inputs in inputRuns)
+            {
+                foreach (var i in inputs)
+                {
+                    numTimesEventHandlerCalled = 0;
+                    runner.Run(i);
+                    await Task.Delay(waitTimeBetweenInputs);
+                    Assert.IsTrue(numTimesEventHandlerCalled > 0);
+                }
+
+                //Simulate idle UI thread
+                await Task.Delay(TestCompletionWaitingTime);
+                var expectedNumProgressCalls = inputs.Last() / BackgroundOperationCancellationCheckStep;
+                Assert.AreEqual(expectedNumProgressCalls, numTimesEventHandlerCalled);
             }
         }
     }
