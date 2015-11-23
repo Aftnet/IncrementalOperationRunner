@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("IncrementalOperationRunner")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Encapsulates the logic needed to perform incremental operations. See project page for more info")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("IncrementalOperationRunner")]
 [assembly: AssemblyCulture("")]
