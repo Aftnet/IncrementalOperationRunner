@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncrementalOperationRunner", "IncrementalOperationRunner\IncrementalOperationRunner.csproj", "{A373346C-9673-4FAF-B51B-1B5D9F086927}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncrementalOperationRunner.Test", "IncrementalOperationRunner.Test\IncrementalOperationRunner.Test.csproj", "{8A0BEFDE-EA20-4ABD-93F8-636CB1E5F331}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A373346C-9673-4FAF-B51B-1B5D9F086927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A373346C-9673-4FAF-B51B-1B5D9F086927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A373346C-9673-4FAF-B51B-1B5D9F086927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A373346C-9673-4FAF-B51B-1B5D9F086927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A0BEFDE-EA20-4ABD-93F8-636CB1E5F331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A0BEFDE-EA20-4ABD-93F8-636CB1E5F331}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A0BEFDE-EA20-4ABD-93F8-636CB1E5F331}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A0BEFDE-EA20-4ABD-93F8-636CB1E5F331}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
