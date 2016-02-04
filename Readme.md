@@ -1,4 +1,6 @@
-﻿#Incremental Operation Runner
+#Incremental Operation Runner
+
+[![Build status](https://ci.appveyor.com/api/projects/status/ioj46pcr3n40xpt4/branch/master?svg=true)](https://ci.appveyor.com/project/albertofustinoni/incrementaloperationrunner/branch/master)
 
 Encapsulates the logic needed to perform incremental operations, that is operations for which the invoker is only interested in the output of the most recent input.
 Most common use case is incremental search, where the search operation takes time and must be run in the background.
