@@ -237,28 +237,14 @@ namespace IncrementalOperationRunner.Test
                 numTimesEventHandlerCalled++;
             };
 
-            var waitTimeBetweenInputs = 30;
-            var inputRuns = new int[][]
-            {
-                new int[] { 5 * waitTimeBetweenInputs },
-                new int[] { 5 * waitTimeBetweenInputs, 3 * waitTimeBetweenInputs }
-            };
+            var expectedNumProgressCalls = 4;
+            var input = expectedNumProgressCalls * BackgroundOperationCancellationCheckStep;
+            runner.Run(input);
 
-            foreach (var inputs in inputRuns)
-            {
-                foreach (var i in inputs)
-                {
-                    numTimesEventHandlerCalled = 0;
-                    runner.Run(i);
-                    await Task.Delay(waitTimeBetweenInputs);
-                    Assert.IsTrue(numTimesEventHandlerCalled > 0);
-                }
+            //Simulate idle UI thread
+            await Task.Delay(2 * input);
 
-                //Simulate idle UI thread
-                await Task.Delay(TestCompletionWaitingTime);
-                var expectedNumProgressCalls = inputs.Last() / BackgroundOperationCancellationCheckStep;
-                Assert.AreEqual(expectedNumProgressCalls, numTimesEventHandlerCalled);
-            }
+            Assert.AreEqual(expectedNumProgressCalls, numTimesEventHandlerCalled);
         }
     }
 }
