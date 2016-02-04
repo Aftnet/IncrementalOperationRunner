@@ -12,3 +12,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("IncrementalOperationRunner")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
+
+[assembly: AssemblyCompany("Alberto Fustinoni")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
+[assembly: AssemblyTrademark("")]
+
+[assembly: AssemblyVersion("1.0.0.0")]
