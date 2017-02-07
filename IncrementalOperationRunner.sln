@@ -5,12 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncrementalOperationRunner", "IncrementalOperationRunner\IncrementalOperationRunner.csproj", "{A373346C-9673-4FAF-B51B-1B5D9F086927}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B698F9F7-A859-4724-9689-071A271BF678}"
-	ProjectSection(SolutionItems) = preProject
-		License.txt = License.txt
-		Readme.md = Readme.md
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncrementalOperationRunner.Test", "IncrementalOperationRunner.Test\IncrementalOperationRunner.Test.csproj", "{C485BCF4-EDF0-4329-8598-267E6DA58A8E}"
 EndProject
 Global
