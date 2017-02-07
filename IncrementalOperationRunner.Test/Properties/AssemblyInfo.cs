@@ -8,7 +8,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("IncrementalOperationRunner.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("IncrementalOperationRunner.Test")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -17,10 +20,17 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("8a0befde-ea20-4abd-93f8-636cb1e5f331")]
+[assembly: Guid("c485bcf4-edf0-4329-8598-267e6da58a8e")]
 
-[assembly: AssemblyCompany("Alberto Fustinoni")]
-[assembly: AssemblyCopyright("Copyright © 2015")]
-[assembly: AssemblyTrademark("")]
-
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Build and Revision Numbers 
+// by using the '*' as shown below:
+// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
