@@ -44,10 +44,7 @@ namespace IncrementalOperationRunner
         public void Stop()
         {
             StopRequested = true;
-            if (CTSource != null)
-            {
-                CTSource.Cancel();
-            }
+            CTSource?.Cancel();
         }
 
         private async void InputChanged()
@@ -79,19 +76,13 @@ namespace IncrementalOperationRunner
 
             if(!StopRequested)
             {
-                if(OperationCompletedEvent != null)
-                {
-                    OperationCompletedEvent(searchResult);
-                }
+                OperationCompletedEvent?.Invoke(searchResult);
             }
         }
 
         private void ReportProgress(TProgress value)
         {
-            if(ProgressChangedEvent != null)
-            {
-                ProgressChangedEvent(value);
-            }
+            ProgressChangedEvent?.Invoke(value);
         }
     }
 }
