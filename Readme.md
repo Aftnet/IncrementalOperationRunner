@@ -1,7 +1,7 @@
 #Incremental Operation Runner
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ioj46pcr3n40xpt4/branch/master?svg=true)](https://ci.appveyor.com/project/Aftnet/incrementaloperationrunner/branch/master)
-[![NuGet version](https://badge.fury.io/nu/IncrementalOperationRunner.svg)](https://badge.fury.io/nu/IncrementalOperationRunner)
+[![NuGet version](https://img.shields.io/nuget/v/IncrementalOperationRunner.svg)](https://www.nuget.org/packages/IncrementalOperationRunner/)
 
 Encapsulates the logic needed to perform incremental operations, that is operations for which the invoker is only interested in the output of the most recent input.
 Most common use case is incremental search, where the search operation takes time and must be run in the background.
