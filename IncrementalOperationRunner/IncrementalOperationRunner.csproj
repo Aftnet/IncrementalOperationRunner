@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://github.com/aftnet/incrementaloperationrunner</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Aftnet/IncrementalOperationRunner/master/License.txt</PackageLicenseUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
